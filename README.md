@@ -1,3 +1,6 @@
+### Omer Cohen
+### omer7530@gmail.com
+##
 # Tree Data Structure and Traversal Iterators
 
 ## Overview
