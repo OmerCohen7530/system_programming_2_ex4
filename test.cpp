@@ -451,7 +451,11 @@ int main()
 
     if (passed)
     {
-        cout << "All tests passed" << endl;
+        cout << "\033[32m******* All tests passed *******\033[0m" << endl;
+    }
+    else
+    {
+        cout << "Some tests failed " << endl;
     }
 
     return 0;

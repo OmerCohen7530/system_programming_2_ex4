@@ -29,6 +29,28 @@ public:
         return !(*this == c);
     }
 
+    bool operator<(const Complex &c) const
+    {
+        return real < c.real || (real == c.real && imag < c.imag);
+    }
+
+    bool operator>(const Complex &c) const
+    {
+        return c < *this;
+    }
+
+    bool operator<=(const Complex &c) const
+    {
+        return !(*this > c);
+    }
+
+    bool operator>=(const Complex &c) const
+    {
+        return !(*this < c);
+    }
+
+    
+
     friend std::ostream &operator<<(std::ostream &os, const Complex &c)
     {
         os << c.real << "+" << c.imag << "i";
