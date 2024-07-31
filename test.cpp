@@ -1,6 +1,8 @@
 // Omer Cohen
 // omer7530@gmail.com
 
+// extream tests: 7, 19
+
 #include <iostream>
 #include <string>
 #include "node.hpp"
@@ -30,7 +32,7 @@ void test1()
     }
 }
 
-// Add a root node to the tree. check if the root node has the same value as the one added
+// Add a root node to the tree. check if it was added successfully
 void test2()
 {
     Tree<double> tree; // Binary tree that contains doubles.

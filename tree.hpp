@@ -196,6 +196,7 @@ public:
             return nodeStack.top();
         }
 
+        // מוציא את ראש המחסנית ומכניס את הילדים בסדר הפוך
         PreOrderIterator& operator++() 
         {
             Node<T>* node = nodeStack.top();
@@ -216,9 +217,9 @@ public:
     class PostOrderIterator {
     private:
         std::stack<Node<T>*> nodeStack;
-        std::stack<Node<T>*> visited;
         bool is_binary;
 
+            // דוחפת את כל הילדים השמאליים ביותר עד שאין יותר ילדים שמאליים
             void push_leftmost(Node<T>* node) 
             {
                 while (node) 
@@ -262,6 +263,7 @@ public:
             return nodeStack.top();
         }
 
+        // מחפש את צומת ההורה לפי הילד שלו , אם לילד יש בנים אז נפעיל עליהם את הדחיפה של השמאליים
         PostOrderIterator& operator++() 
         {
             if (is_binary)
@@ -269,11 +271,11 @@ public:
                 if (!nodeStack.empty()) {
                     Node<T>* currentNode = nodeStack.top();
                     nodeStack.pop();
-                    visited.push(currentNode);
 
                     if (!nodeStack.empty()) 
                     {
                         Node<T>* parentNode = nodeStack.top();
+                        // אם לא מוצא אז נגיע לסוף הרשימה
                         auto childIterator = std::find(parentNode->get_children().begin(), parentNode->get_children().end(), currentNode);
                         if (childIterator != parentNode->get_children().end() && ++childIterator != parentNode->get_children().end()) 
                         {
@@ -311,6 +313,7 @@ public:
         Node<T>* current;
         bool is_binary;
 
+        // דוחף את כל הילדים השמאליים ביותר עד שאין יותר ילדים שמאליים
         void push_left_InOrder(Node<T> *node)
         {
             while (node != nullptr)
@@ -348,6 +351,7 @@ public:
             return nodeStack.top();
         }
 
+        // מוציא את ראש המחסנית. אם לאותו נוד יש ילד ימני אז נפעיל עליו דחיפה של שמאליים
         InOrderIterator& operator++() 
         {
             if(is_binary){
@@ -404,6 +408,7 @@ public:
         {
             return nodeQueue.front();
         }
+
 
         BFSIterator& operator++() 
         {
@@ -470,6 +475,7 @@ public:
     private:
         vector<Node<T>*> nodeHeap;
 
+        // אוסף את כל הנודים לפי אבא ובנים בצורה עמוקה לתוך וקטור
         void collect_nodes(Node<T> *node)
         {
             if (node != nullptr)
@@ -487,7 +493,10 @@ public:
             if (root != nullptr) 
             {
                 collect_nodes(root);
+                // LMDA function to compare the nodes
                 auto compare = [](Node<T>* lhs, Node<T>* rhs) { return lhs->get_value() > rhs->get_value(); };
+                // Heapify the vector
+                // עוברת על כל הצמתים בוקטור ובונה ערימה לפי פונקיית קומפייר. ערך מינימלי בראש הרשימה.
                 std::make_heap(nodeHeap.begin(), nodeHeap.end(), compare);
             }
         }
@@ -504,8 +513,11 @@ public:
 
         HeapIterator& operator++() 
         {
+            // LAMDA function to compare the nodes
             auto compare = [](Node<T>* lhs, Node<T>* rhs) { return lhs->get_value() > rhs->get_value(); };
+            // מעבירה את הצומת הראשון (שהוא גם הקטן ביותר) לסוף הרשימה
             std::pop_heap(nodeHeap.begin(), nodeHeap.end(), compare);
+            // מעיף את הצומת האחרונה שהוא הקטן ביותר
             nodeHeap.pop_back();
             return *this;
         }
